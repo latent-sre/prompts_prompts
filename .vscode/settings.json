@@ -1,0 +1,23 @@
+{
+  // Enable repo custom instructions (.github/copilot-instructions.md and *.instructions.md).
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+
+  // Enable reusable prompt files (run as /name in Copilot Chat).
+  "chat.promptFiles": true,
+
+  // Where Copilot looks for prompt files. Add a user-level path too so the
+  // token-* commands are available in every workspace, not just this repo.
+  "chat.promptFilesLocations": {
+    ".github/prompts": true
+  },
+
+  // Where Copilot looks for path-scoped instruction files (*.instructions.md).
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true
+  },
+
+  // Where Copilot looks for custom chat modes (*.chatmode.md).
+  "chat.modeFilesLocations": {
+    ".github/chatmodes": true
+  }
+}
