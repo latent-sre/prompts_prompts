@@ -13,8 +13,8 @@ Token estimate used everywhere: `tokens ≈ characters / 4`.
 | `copilot-instructions.md` | **≤ 500** | Always-on, every request. Keep it to durable, non-discoverable rules. |
 | each `*.instructions.md` | **≤ 300** | Always-on for matching paths; must be `applyTo`-scoped. |
 | each `*.prompt.md` | **≤ 400** | On-demand; longer reference material belongs in a skill. |
-| each `*.chatmode.md` | **≤ 350** | Persona + minimal tool set, not a manual. |
-| `SKILL.md` | **≤ 500** | Keep short; push detail to `references/` (loaded on demand). |
+| each `*.chatmode.md` | **≤ 400** | Persona + minimal tool set, not a manual. |
+| `SKILL.md` | **≤ 700** | Keep short; push detail to `references/` (loaded on demand). |
 | each `references/*.md` | no hard cap | On-demand; size matters far less. |
 
 Over budget is not automatically wrong — but it must be **justified** (e.g., a

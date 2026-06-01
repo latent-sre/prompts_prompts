@@ -4,6 +4,12 @@ A deliberately bloated customization set (`before/`) and its lean rewrite (`afte
 Used as teaching material and as a fixture to sanity-check `/token-audit`,
 `/token-refactor`, and `/token-review`.
 
+> **Note:** the credentials in `before/copilot-instructions.md` are obviously-fake
+> placeholders (`EXAMPLE_FAKE_PW`, `sk-acme-EXAMPLE-NOT-A-REAL-KEY-0000`, `.example`
+> hosts) planted only so the audit can demonstrate flagging secrets (rubric F). They are
+> not real and must never be replaced with real values. These example files are *not*
+> wired into `.vscode/settings.json`, so Copilot does not auto-load them.
+
 ## What changed
 
 | File | Before | After | Why |

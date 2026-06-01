@@ -15,7 +15,7 @@ higher severity than the same waste in an on-demand prompt file.
 Targets: `copilot-instructions.md`, `*.instructions.md`, `AGENTS.md`.
 
 Detect:
-- File exceeds its budget in `../../../docs/authoring-standard.md`.
+- File exceeds its budget in [`authoring-standard.md`](authoring-standard.md).
 - Content discoverable from the code itself (folder structure, framework names,
   obvious conventions) — the model can read these; don't pay for them every request.
 - LLM-generated boilerplate, filler, throat-clearing ("As an expert engineer, you
@@ -34,7 +34,7 @@ it that way ("~120 tokens × every chat request").
 
 ## B. Architecture / placement (re-architect)
 
-Decide the right primitive with `../../../docs/customization-architecture.md`.
+Decide the right primitive with [`customization-architecture.md`](customization-architecture.md).
 
 Detect & fix:
 - **Always-on but rarely needed** → move to a **prompt file** or **skill**

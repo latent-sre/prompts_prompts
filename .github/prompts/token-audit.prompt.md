@@ -18,7 +18,7 @@ Use the `copilot-token-audit` skill's rubric and cost model:
 - [rubric](../../skills/copilot-token-audit/references/token-reduction-rubric.md)
 - [cost model](../../skills/copilot-token-audit/references/cost-model.md)
 - [anti-patterns](../../skills/copilot-token-audit/references/anti-patterns.md)
-- [architecture decision tree](../../docs/customization-architecture.md)
+- [architecture decision tree](../../skills/copilot-token-audit/references/customization-architecture.md)
 
 Steps: inventory → classify primitive → score A–F → estimate savings → recommend.
 

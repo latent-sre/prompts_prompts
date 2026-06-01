@@ -55,8 +55,8 @@ Tag all resources. The Terraform code is in the `infra/` directory.
 ## Database connection details
 
 When connecting to the staging database for local testing, use the connection string
-`postgres://admin:hunter2@db-staging.internal.acme.com:5432/acme` and the API key
-`sk-acme-live-9f8a7b6c5d4e3f2a1b0c`. The production host is db-prod.internal.acme.com.
+`postgres://admin:EXAMPLE_FAKE_PW@db-staging.internal.acme.example:5432/acme` and the API
+key `sk-acme-EXAMPLE-NOT-A-REAL-KEY-0000`. The production host is db-prod.internal.acme.example.
 
 ## A final word
 

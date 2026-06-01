@@ -10,16 +10,21 @@ are short wrappers — so the toolkit's own always-on footprint is ~zero.
 
 ## What's in here
 
+**The skill is the self-contained, portable unit** — everything the audit logic loads
+on demand lives under `skills/copilot-token-audit/references/`. The prompts and chat
+mode are thin wrappers that reference the skill, so they must travel **with** it. The
+`docs/` files are human-facing reading material only; Copilot never auto-loads them, so
+they cost zero tokens.
+
 | Path | What it is |
 |---|---|
-| `skills/copilot-token-audit/` | **The analyzer.** `SKILL.md` + on-demand `references/` (rubric, cost model, anti-patterns). |
+| `skills/copilot-token-audit/SKILL.md` | **The analyzer** — trigger, procedure, report format. |
+| `skills/copilot-token-audit/references/` | On-demand: rubric (A–F), cost model, anti-patterns, **customization-architecture**, **authoring-standard**. |
 | `.github/prompts/token-audit.prompt.md` | `/token-audit` — audit a file / selection / pasted prompt. |
 | `.github/prompts/token-refactor.prompt.md` | `/token-refactor` — rewrite a customization to be leaner. |
 | `.github/prompts/token-review.prompt.md` | `/token-review` — PR gate against the authoring standard. |
 | `.github/chatmodes/token-optimizer.chatmode.md` | **Token Optimizer** — read-only persona for interactive, multi-file audits. |
 | `docs/token-reduction-guide.md` | The expert guide: levers + content-exclusion/MCP checklists. |
-| `docs/customization-architecture.md` | Decision tree: instructions vs prompt vs skill vs chat mode. |
-| `docs/authoring-standard.md` | Token budgets + rules; what `/token-review` enforces. |
 | `docs/measuring-savings.md` | Prove before/after with premium-request reports + Metrics API. |
 | `docs/cheat-sheet.md` | One-page printable runtime-habits cheat-sheet. |
 | `examples/before` · `examples/after` | A bloated set and its lean rewrite (teaching + fixture). |
@@ -38,12 +43,12 @@ are short wrappers — so the toolkit's own always-on footprint is ~zero.
 Your customizations live in many repos, and some people keep prompts outside repos.
 Three adoption paths:
 
-1. **Per-repo** — copy `skills/copilot-token-audit/` and `.github/prompts/*` into a
-   target repo so the team gets `/token-audit`, `/token-refactor`, `/token-review`,
-   and the skill there.
-2. **Per-user (recommended for loose prompts)** — put the skill and prompt files in your
-   **VS Code user-level** prompt/skill locations and add that path to
-   `chat.promptFilesLocations`. Then the `/token-*` commands work in **every** workspace,
+1. **Per-repo** — copy the whole bundle together: `skills/copilot-token-audit/`,
+   `.github/prompts/*`, and `.github/chatmodes/*`. The prompts and chat mode reference the
+   skill by relative path, so the skill must be present for their links to resolve.
+2. **Per-user (recommended for loose prompts)** — put the same bundle in your **VS Code
+   user-level** prompt/skill locations and add those paths to `chat.promptFilesLocations`
+   (and the skill location). Then the `/token-*` commands work in **every** workspace,
    including when you just paste a loose prompt. Turn on **Settings Sync** to share across
    machines.
 3. **Interactive** — pick the **Token Optimizer** chat mode and point it at any open files.
@@ -55,8 +60,25 @@ audit  → /token-audit  or  Token Optimizer chat mode   (find waste, estimate s
 fix    → /token-refactor                                (rewrite leaner / re-architect)
 gate   → /token-review                                  (block regressions in PRs)
 prove  → docs/measuring-savings.md                      (before/after metrics)
-learn  → docs/ guide, cheat-sheet, authoring-standard   (team enablement)
+learn  → docs/ guide + cheat-sheet; skill references    (team enablement)
 ```
+
+## Compatibility (check against your version)
+
+Copilot customization is evolving, so a few identifiers may differ on your VS Code /
+Copilot build — confirm before rolling out org-wide:
+
+- **`.vscode/settings.json` keys** — e.g. `chat.promptFiles`, `chat.promptFilesLocations`,
+  `chat.instructionsFilesLocations`, `chat.modeFilesLocations`,
+  `github.copilot.chat.codeGeneration.useInstructionFiles`. Names/availability vary by version.
+- **Chat-mode / agent format** — VS Code uses `*.chatmode.md` in `.github/chatmodes/`;
+  GitHub.com uses `*.agent.md` in `.github/agents/`. This toolkit uses the VS Code form.
+- **`tools:` names** in prompts/chat modes (e.g. `codebase`, `search`, `usages`, `changes`,
+  `editFiles`) are version-dependent; keep tool sets minimal and adjust to what your build exposes.
+- **Skill discovery** — how `skills/**/SKILL.md` is auto-loaded vs. installed (e.g. via
+  `gh skills install`) is still maturing; verify your install path.
+
+The audit logic itself (rubric, cost model, report format) is tool-agnostic and unaffected.
 
 ## Scope
 

@@ -13,8 +13,8 @@ Rewrite the target customization to use **fewer tokens while preserving intent**
 Apply the rules in:
 - [rubric](../../skills/copilot-token-audit/references/token-reduction-rubric.md)
 - [anti-patterns](../../skills/copilot-token-audit/references/anti-patterns.md)
-- [authoring standard / budgets](../../docs/authoring-standard.md)
-- [architecture decision tree](../../docs/customization-architecture.md)
+- [authoring standard / budgets](../../skills/copilot-token-audit/references/authoring-standard.md)
+- [architecture decision tree](../../skills/copilot-token-audit/references/customization-architecture.md)
 
 Do this:
 1. If content is in the **wrong primitive** (e.g., always-on but rarely needed),

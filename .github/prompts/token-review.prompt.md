@@ -13,9 +13,9 @@ I name:
 `copilot-instructions.md`, `*.instructions.md`, `*.prompt.md`, `*.chatmode.md`,
 `*.agent.md`, `SKILL.md`, `AGENTS.md`.
 
-Check each against the [authoring standard](../../docs/authoring-standard.md):
+Check each against the [authoring standard](../../skills/copilot-token-audit/references/authoring-standard.md):
 - Within its **token budget** (`chars/4`).
-- Correct **primitive** ([decision tree](../../docs/customization-architecture.md)) —
+- Correct **primitive** ([decision tree](../../skills/copilot-token-audit/references/customization-architecture.md)) —
   flag always-on content that should be on-demand.
 - Has an **output constraint** where the standard requires one.
 - No **secrets/PII** (see [rubric](../../skills/copilot-token-audit/references/token-reduction-rubric.md) F).
