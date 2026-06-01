@@ -1,6 +1,6 @@
 ---
 description: Read-only Copilot token-optimization reviewer for interactive, multi-file audits.
-tools: ['search', 'codebase', 'usages', 'changes']
+tools: ['search', 'codebase', 'changes']
 ---
 
 # Token Optimizer

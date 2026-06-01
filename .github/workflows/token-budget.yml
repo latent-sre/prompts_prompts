@@ -1,0 +1,29 @@
+name: Token budget gate
+
+# Deterministic CI gate that mirrors the toolkit's authoring standard. The nuanced
+# review is the LLM-driven /token-review prompt; this just blocks obvious bloat/secrets
+# in Copilot customization files, since Copilot itself can't run in CI.
+
+on:
+  pull_request:
+    paths:
+      - "**/copilot-instructions.md"
+      - "**/*.instructions.md"
+      - "**/*.prompt.md"
+      - "**/*.chatmode.md"
+      - "**/*.agent.md"
+      - "**/SKILL.md"
+      - "scripts/check_token_budgets.py"
+      - ".github/workflows/token-budget.yml"
+  workflow_dispatch:
+
+jobs:
+  token-budget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Check token budgets
+        run: python3 scripts/check_token_budgets.py

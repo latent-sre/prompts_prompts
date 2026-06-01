@@ -66,23 +66,25 @@ prove  → docs/measuring-savings.md                      (before/after metrics)
 learn  → docs/ guide + cheat-sheet; skill references    (team enablement)
 ```
 
-## Compatibility (check against your version)
+## Compatibility (verified against current VS Code docs, June 2026)
 
-Copilot customization is evolving, so a few identifiers may differ on your VS Code /
-Copilot build — confirm before rolling out org-wide:
+Copilot customization is evolving; these identifiers vary by VS Code / Copilot build:
 
-- **`.vscode/settings.json` keys** — e.g. `chat.promptFiles`, `chat.promptFilesLocations`,
-  `chat.instructionsFilesLocations`, `chat.modeFilesLocations`,
-  `github.copilot.chat.codeGeneration.useInstructionFiles`. Names/availability vary by version.
+- **Instruction settings** — `.github/copilot-instructions.md` and `*.instructions.md` apply
+  automatically (file-based). The old `github.copilot.chat.codeGeneration.useInstructionFiles`
+  toggle is **deprecated** (VS Code 1.102) — don't rely on it. File locations are set via
+  `chat.promptFilesLocations`, `chat.instructionsFilesLocations`, `chat.modeFilesLocations`
+  (maps of path → bool); a separate `chat.promptFiles` enable flag is no longer required.
+- **Prompt `mode` field** — this toolkit uses `mode: agent` (broadly supported). The newest
+  VS Code renames it to `agent:` (values `ask` | `agent` | `plan`); switch if your build needs it.
+- **`tools:` names** — this toolkit uses widely-supported bare names (`codebase`, `search`,
+  `changes`). The newest VS Code uses namespaced ids (`search/codebase`, `search/usages`,
+  `search/changes`, `edit/editFiles`, `web/fetch`). Keep tool sets minimal; adjust to your build.
 - **Chat-mode / agent format** — VS Code uses `*.chatmode.md` in `.github/chatmodes/`;
   GitHub.com uses `*.agent.md` in `.github/agents/`. This toolkit uses the VS Code form.
-- **`tools:` names** in prompts/chat modes (e.g. `codebase`, `search`, `usages`, `changes`,
-  `editFiles`) are version-dependent; keep tool sets minimal and adjust to what your build exposes.
-- **Skill discovery** — project skills live in `.github/skills/<name>/SKILL.md` (VS Code
-  also recognizes `.claude/skills/` and `.agents/skills/`); personal skills in
-  `~/.copilot/skills/`. Add shared paths with `chat.agentSkillsLocations`. Requires a
-  Copilot/VS Code build with Agent Skills (SKILL.md) support, and the skill's frontmatter
-  `name` must match its folder name.
+- **Skill discovery** — project skills in `.github/skills/<name>/SKILL.md` (also `.claude/skills/`,
+  `.agents/skills/`); personal in `~/.copilot/skills/`; shared paths via `chat.agentSkillsLocations`.
+  The skill's frontmatter `name` must match its folder.
 
 The audit logic itself (rubric, cost model, report format) is tool-agnostic and unaffected.
 

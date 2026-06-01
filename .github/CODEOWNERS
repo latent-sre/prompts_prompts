@@ -1,0 +1,10 @@
+# Owners for the Copilot token-reduction toolkit.
+# EDIT THIS: replace the placeholder with your real GitHub team or users.
+# Format: <path>  <owner ...>
+
+*                                         @your-org/sre-platform
+
+# The audit logic and authoring standard — guard changes carefully.
+.github/skills/copilot-token-audit/       @your-org/sre-platform
+.github/workflows/                        @your-org/sre-platform
+scripts/                                  @your-org/sre-platform

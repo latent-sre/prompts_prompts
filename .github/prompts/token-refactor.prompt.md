@@ -1,7 +1,6 @@
 ---
 description: Rewrite a Copilot prompt/instruction/skill/chat mode into a leaner, lower-token version.
 mode: agent
-tools: ['search', 'codebase', 'editFiles']
 ---
 
 # /token-refactor
