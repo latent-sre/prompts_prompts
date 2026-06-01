@@ -11,15 +11,15 @@ are short wrappers — so the toolkit's own always-on footprint is ~zero.
 ## What's in here
 
 **The skill is the self-contained, portable unit** — everything the audit logic loads
-on demand lives under `skills/copilot-token-audit/references/`. The prompts and chat
+on demand lives under `.github/skills/copilot-token-audit/references/`. The prompts and chat
 mode are thin wrappers that reference the skill, so they must travel **with** it. The
 `docs/` files are human-facing reading material only; Copilot never auto-loads them, so
 they cost zero tokens.
 
 | Path | What it is |
 |---|---|
-| `skills/copilot-token-audit/SKILL.md` | **The analyzer** — trigger, procedure, report format. |
-| `skills/copilot-token-audit/references/` | On-demand: rubric (A–F), cost model, anti-patterns, **customization-architecture**, **authoring-standard**. |
+| `.github/skills/copilot-token-audit/SKILL.md` | **The analyzer** — trigger, procedure, report format. |
+| `.github/skills/copilot-token-audit/references/` | On-demand: rubric (A–F), cost model, anti-patterns, **customization-architecture**, **authoring-standard**. |
 | `.github/prompts/token-audit.prompt.md` | `/token-audit` — audit a file / selection / pasted prompt. |
 | `.github/prompts/token-refactor.prompt.md` | `/token-refactor` — rewrite a customization to be leaner. |
 | `.github/prompts/token-review.prompt.md` | `/token-review` — PR gate against the authoring standard. |
@@ -43,15 +43,18 @@ they cost zero tokens.
 Your customizations live in many repos, and some people keep prompts outside repos.
 Three adoption paths:
 
-1. **Per-repo** — copy the whole bundle together: `skills/copilot-token-audit/`,
-   `.github/prompts/*`, and `.github/chatmodes/*`. The prompts and chat mode reference the
-   skill by relative path, so the skill must be present for their links to resolve.
-2. **Per-user (recommended for loose prompts)** — put the same bundle in your **VS Code
-   user-level** prompt/skill locations and add those paths to `chat.promptFilesLocations`
-   (and the skill location). Then the `/token-*` commands work in **every** workspace,
-   including when you just paste a loose prompt. Turn on **Settings Sync** to share across
-   machines.
-3. **Interactive** — pick the **Token Optimizer** chat mode and point it at any open files.
+1. **Per-repo** — copy the whole bundle together: `.github/skills/copilot-token-audit/`,
+   `.github/prompts/*`, and `.github/chatmodes/*`. These `.github/` locations are
+   auto-discovered (no extra setting needed). The prompts and chat mode reference the skill
+   by relative path, so the skill must be present for their links to resolve.
+2. **Per-user (recommended for loose prompts)** — put the skill in `~/.copilot/skills/` and
+   the prompt/chat-mode files in your VS Code user locations (with `chat.promptFilesLocations`
+   / `chat.modeFilesLocations`). Then the `/token-*` commands and skill work in **every**
+   workspace, including on a pasted loose prompt. Turn on **Settings Sync** to share across machines.
+3. **Central, many repos (best for an org)** — keep one shared copy of the skill (e.g. in a
+   tools repo or shared path) and point every repo at it with `chat.agentSkillsLocations`,
+   so you maintain the audit in one place instead of copying it into each repo.
+4. **Interactive** — pick the **Token Optimizer** chat mode and point it at any open files.
 
 ## How the pieces fit
 
@@ -75,8 +78,11 @@ Copilot build — confirm before rolling out org-wide:
   GitHub.com uses `*.agent.md` in `.github/agents/`. This toolkit uses the VS Code form.
 - **`tools:` names** in prompts/chat modes (e.g. `codebase`, `search`, `usages`, `changes`,
   `editFiles`) are version-dependent; keep tool sets minimal and adjust to what your build exposes.
-- **Skill discovery** — how `skills/**/SKILL.md` is auto-loaded vs. installed (e.g. via
-  `gh skills install`) is still maturing; verify your install path.
+- **Skill discovery** — project skills live in `.github/skills/<name>/SKILL.md` (VS Code
+  also recognizes `.claude/skills/` and `.agents/skills/`); personal skills in
+  `~/.copilot/skills/`. Add shared paths with `chat.agentSkillsLocations`. Requires a
+  Copilot/VS Code build with Agent Skills (SKILL.md) support, and the skill's frontmatter
+  `name` must match its folder name.
 
 The audit logic itself (rubric, cost model, report format) is tool-agnostic and unaffected.
 

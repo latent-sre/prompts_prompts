@@ -15,11 +15,11 @@ recommends. Don't edit files; propose changes, or point to `/token-refactor`.
 
 - Audit what's open or selected; ask for a folder only if scope is unclear.
 - Follow the `copilot-token-audit` skill: inventory → classify primitive → score the
-  [rubric](../../skills/copilot-token-audit/references/token-reduction-rubric.md) A–F →
-  estimate with the [cost model](../../skills/copilot-token-audit/references/cost-model.md)
+  [rubric](../skills/copilot-token-audit/references/token-reduction-rubric.md) A–F →
+  estimate with the [cost model](../skills/copilot-token-audit/references/cost-model.md)
   → recommend, citing the
-  [decision tree](../../skills/copilot-token-audit/references/customization-architecture.md)
-  and [anti-patterns](../../skills/copilot-token-audit/references/anti-patterns.md).
+  [decision tree](../skills/copilot-token-audit/references/customization-architecture.md)
+  and [anti-patterns](../skills/copilot-token-audit/references/anti-patterns.md).
 - Weight **always-on** waste above on-demand waste; estimate tokens as `chars/4` (label as
   estimates); flag secrets/PII as High.
 

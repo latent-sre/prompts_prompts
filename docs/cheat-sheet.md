@@ -38,4 +38,4 @@ One page of habits. Most real-world savings come from behavior, not file edits.
 
 ---
 Full detail: [token-reduction-guide.md](token-reduction-guide.md) ·
-Budgets: [authoring-standard.md](../skills/copilot-token-audit/references/authoring-standard.md)
+Budgets: [authoring-standard.md](../.github/skills/copilot-token-audit/references/authoring-standard.md)

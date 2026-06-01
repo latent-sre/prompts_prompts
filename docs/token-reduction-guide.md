@@ -12,14 +12,14 @@ VS Code — without losing capability. Ordered by impact-per-effort.
 request. A 400-token file across 1,000 requests/month ≈ 400k input tokens before
 anyone types.
 - Keep `copilot-instructions.md` tiny (budget: ≤ ~500 tokens — see
-  [authoring-standard.md](../skills/copilot-token-audit/references/authoring-standard.md)).
+  [authoring-standard.md](../.github/skills/copilot-token-audit/references/authoring-standard.md)).
 - Delete filler, praise, and anything discoverable from the repo.
 - Split path-specific rules into `applyTo`-scoped `*.instructions.md`.
 
 ### 2. Put the right content in the right primitive
 Move occasionally-needed always-on content into **prompt files** and **skills**
 (progressive disclosure — free until invoked). See
-[customization-architecture.md](../skills/copilot-token-audit/references/customization-architecture.md). This usually beats
+[customization-architecture.md](../.github/skills/copilot-token-audit/references/customization-architecture.md). This usually beats
 every other optimization because it converts per-request cost into per-use cost.
 
 ### 3. Constrain output
