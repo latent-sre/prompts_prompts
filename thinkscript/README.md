@@ -1,4 +1,42 @@
-# SwingConfluence — thinkorswim swing-trading toolkit
+# SwingConfluence / SwingMaster — thinkorswim swing-trading toolkit
+
+## ⭐ Start here: SwingMaster (the combined system)
+
+`SwingMaster_Upper.ts` + `SwingMaster_Strategy.ts` merge two complementary
+edges into one regime-switched system instead of averaging their signals away:
+
+```
+                 close > 200-SMA?  ── no ──> stand aside (or optional shorts)
+                        │ yes
+                 ADX >= 20?
+                /            \
+            yes (TREND)     no (CHOP)
+               │                │
+   TREND ENGINE             MEAN-REVERSION ENGINE
+   pullback-in-trend        Connors RSI(2) < 10
+   score 4/7 + leading      exit close > 5-SMA or RSI(2) > 70
+   trigger, 2R target,      wide 3-ATR disaster stop
+   Chandelier trail         10-bar time stop
+```
+
+- **Trend engine** (order tags `TF`): lower win rate, bigger winners — the
+  SwingConfluence pullback logic upgraded with Chaikin Money Flow and Hull MA
+  slope (score is 0–7) and a squeeze-release trigger.
+- **Mean-reversion engine** (order tags `MR`, long-only): high win rate, small
+  winners — the published Connors RSI(2) structure, with its one flaw (tail
+  risk from having no stop) capped by a wide disaster stop that is far enough
+  away to rarely interrupt the bounce.
+- Because each engine trades only the regime where its math has an edge, the
+  blended equity curve is smoother than either system alone — that, plus the
+  shared risk layer, is what "combining them" should mean.
+- The backtest report separates the engines by order tag, so you can verify
+  each edge independently (expect `MR` to win on win-rate and `TF` on average
+  winner size; judge the combination on profit factor and drawdown).
+
+The original single-engine files below remain useful on their own and as the
+building blocks of SwingMaster.
+
+---
 
 Three ThinkScript files built for **steady swing trades** (days to a few weeks),
 not moon shots. The system only takes entries where **lagging trend
@@ -7,6 +45,8 @@ into extended or hyper-volatile moves.
 
 | File | Type | What it does |
 |---|---|---|
+| `SwingMaster_Upper.ts` | Chart study | **Combined system** — regime/mode labels, both engines' signals, stop/target lines |
+| `SwingMaster_Strategy.ts` | Strategy | **Combined system, backtestable** — TF/MR order tags for per-engine stats |
 | `SwingConfluence_Upper.ts` | Chart study | Entry/exit arrows, trailing stop + profit target lines, SuperTrend, EMAs, info labels, alerts |
 | `SwingConfluence_Lower.ts` | Lower study | Net confluence histogram, Fisher Transform, Connors RSI, squeeze dots, leading-trigger dots |
 | `SwingConfluence_Strategy.ts` | Strategy | Same engine with `AddOrder()` for backtesting (Show Report → trade list & P/L) |
