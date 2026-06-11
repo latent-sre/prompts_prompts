@@ -1,37 +1,49 @@
 # SwingConfluence / SwingMaster — thinkorswim swing-trading toolkit
 
-## ⭐ Start here: SwingMaster (the combined system)
+## ⭐ Start here: SwingMaster v2 (the combined system)
 
 `SwingMaster_Upper.ts` + `SwingMaster_Strategy.ts` merge two complementary
-edges into one regime-switched system instead of averaging their signals away:
+edges into one dual-engine system. **v2 is an evidence-driven refactor**: a
+deep-research pass over the published literature reshaped the routing and
+the weighting of every component.
 
 ```
                  close > 200-SMA?  ── no ──> stand aside (or optional shorts)
                         │ yes
-                 ADX >= 20?
+                 price state?
                 /            \
-            yes (TREND)     no (CHOP)
-               │                │
-   TREND ENGINE             MEAN-REVERSION ENGINE
-   pullback-in-trend        Connors RSI(2) < 10
-   score 4/7 + leading      exit close > 5-SMA or RSI(2) > 70
-   trigger, 2R target,      wide 3-ATR disaster stop
-   Chandelier trail         10-bar time stop
+   RSI(2) < 10 (deep dip)   pullback recovery in trend structure
+            │                            │
+   MEAN-REVERSION ENGINE        TREND ENGINE
+   Connors RSI(2) < 10          CORE (mandatory): EMA 8>21 structure +
+   exit close > 5-SMA           Connors-family leading trigger + no-chase
+   or RSI(2) > 70               gates;  EXTRAS (2 of 5 tiebreakers):
+   wide 3-ATR disaster stop     Vortex, MACD slope, CMF, Hull, RelVol
+   10-bar time stop             2R target, Chandelier trail, 15-bar stop
 ```
 
-- **Trend engine** (order tags `TF`): lower win rate, bigger winners — the
-  SwingConfluence pullback logic upgraded with Chaikin Money Flow and Hull MA
-  slope (score is 0–7) and a squeeze-release trigger.
-- **Mean-reversion engine** (order tags `MR`, long-only): high win rate, small
-  winners — the published Connors RSI(2) structure, with its one flaw (tail
-  risk from having no stop) capped by a wide disaster stop that is far enough
-  away to rarely interrupt the bounce.
-- Because each engine trades only the regime where its math has an edge, the
-  blended equity curve is smoother than either system alone — that, plus the
-  shared risk layer, is what "combining them" should mean.
-- The backtest report separates the engines by order tag, so you can verify
-  each edge independently (expect `MR` to win on win-rate and `TF` on average
-  winner size; judge the combination on profit factor and drawdown).
+What changed in v2, and why:
+
+| Change | Evidence basis |
+|---|---|
+| **ADX mode switch → optional gate, default off** (routing is now by price state) | No rigorous published test of "ADX<20 → mean revert" exists; the one data-snooping-adjusted academic test of Wilder's DMI found no significant profits (Park & Irwin) |
+| **Entry split into mandatory core + tiebreaker extras** | The core (200-SMA regime, pullback-not-breakout entries, RSI(2)-family timing) has real supporting evidence; Vortex/CMF/Hull/MACD-slope are folklore-grade and can no longer outvote it |
+| **Fisher Transform, SuperTrend, squeeze removed** | Fisher: original paper has no backtest, no independent test exists. SuperTrend: only academic test lost money on defaults. Squeeze: vendor-marketing numbers only. (All remain in SwingConfluence for discretionary use) |
+| **Stop asymmetry kept deliberately** | Stops improve momentum/trend trades (Han, Zhou & Zhu) but hurt mean reversion (Connors; Kaminski & Lo) — tight ATR stops on TF trades, wide disaster stop only on MR trades |
+
+Honest expectations (from the research):
+
+- Trade it on **liquid large caps / index ETFs** — net of costs the
+  short-term reversal edge survives mainly in large caps.
+- The MR edge has **decayed ~40% since the 2000s** but remains positive;
+  next-open fills cost ~0.2–0.5%/trade vs. published close-fill numbers, so
+  expect roughly half the per-trade economics of the books.
+- The 200-SMA filter buys **drawdown reduction (~half), not extra return** —
+  it cost ~4 pts/yr in the 2010s bull market. For steady swing trading
+  that's a trade worth making, knowingly.
+- The backtest report separates engines by order tag (`TF`/`MR`): expect MR
+  to win on win-rate and TF on average winner size; judge the combination on
+  profit factor and max drawdown.
 
 The original single-engine files below remain useful on their own and as the
 building blocks of SwingMaster.
